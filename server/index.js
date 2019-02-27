@@ -2,6 +2,7 @@ const express = require('express');
 const session = require('express-session');
 const massive = require('massive')
 const bodyParser = require('body-parser')
+const auth = require('./middleware/authMiddleware')
 require('dotenv').config()
 
 const app = express();
@@ -33,4 +34,8 @@ const treasureCtrl = require('./controllers/treasureController')
 app.post(`/auth/register`, authCtrl.register);
 app.post(`/auth/login`, authCtrl.login);
 app.get(`/auth/logout`, authCtrl.logout);
+
+
+//Treasure Endponts
 app.get(`/api/treasure/dragon`, treasureCtrl.dragonTreasure)
+app.get(`/api/treasure/user`,auth.usersOnly, treasureCtrl.getUserTreasure)
