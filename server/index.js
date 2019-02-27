@@ -26,9 +26,11 @@ massive(CONNECTION_STRING).then( db => {
 
 //CONTROLLERS
 const authCtrl = require('./controllers/authController')
+const treasureCtrl = require('./controllers/treasureController')
 
 
 //ENDPOINTS
 app.post(`/auth/register`, authCtrl.register);
 app.post(`/auth/login`, authCtrl.login);
-app.get(`/auth/logout`, authCtrl.logout)
+app.get(`/auth/logout`, authCtrl.logout);
+app.get(`/api/treasure/dragon`, treasureCtrl.dragonTreasure)
