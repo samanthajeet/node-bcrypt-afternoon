@@ -6,9 +6,10 @@ module.exports = {
       const db = req.app.get('db')
       const { username, password, isAdmin } = req.body
 
-      let usernameResponse = await db.get_user([username])
+      let foundUser = await db.get_user([username])
+      const existingUser = foundUser[0]
 
-      if (usernameResponse [0]){
+      if (existingUser){
         res.status(409).send('Username taken')
       }
 
@@ -16,9 +17,9 @@ module.exports = {
       let hash = bcrypt.hashSync(password, salt)
 
       let result = await db.register_user([isAdmin, username, hash])
-      const user = result[0]
+      let user = result[0]
 
-      req.session.user = {isAdmin: user.is_admin, id: user.id, username: user.username}
+      req.session.user = user
       res.status(200).send(req.session.user)
 
     } catch (error) {
