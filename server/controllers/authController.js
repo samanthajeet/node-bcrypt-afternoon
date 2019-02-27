@@ -53,5 +53,9 @@ module.exports = {
       console.log('error loggin in user', error)
       res.status(500).send(error)
     }
+  },
+  logout: async (req, res) => {
+    req.session.destroy()
+    res.sendStatus(200)
   }
 }
